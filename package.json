@@ -1,0 +1,35 @@
+{
+  "name": "suite-aws-official",
+  "version": "0.0.3",
+  "description": "A Real Estate Application",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Advaith Venkatakrishnan",
+  "dependencies": {
+    "angular-chart.js": "^1.1.1",
+    "angular-route": "^1.5.7",
+    "aws-sdk": "*",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.1",
+    "connect-dynamodb": "^1.0.11",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "dynamoose": "^0.7.0",
+    "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "jade": "*",
+    "jsonwebtoken": "^7.4.1",
+    "jwt-decode": "^2.2.0",
+    "mailgun-js": "^0.9.1",
+    "morgan": "^1.8.1",
+    "nodemailer": "^4.0.1",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "passport-linkedin-oauth2": "^1.5.0",
+    "passport-local": "^1.0.0",
+    "passport-remember-me": "0.0.1",
+    "request": "*"
+  }
+}

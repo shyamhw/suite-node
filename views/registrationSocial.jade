@@ -1,0 +1,128 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Registration
+    // CSS
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500')
+    link(href='../static/css/bootstrap.min.css', rel='stylesheet')
+    link(rel='stylesheet', href='../static/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='../static/css/form-elements.css')
+    link(rel='stylesheet', href='../static/css/style1.css')
+    script(src="https://js.stripe.com/v3/")
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    // WARNING: Respond.js doesn't work if you view the page via file://
+    //if lt IE 9
+      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-98894350-1', 'auto');
+      ga('send', 'pageview');
+      
+  body
+    .col-sm-10.col-sm-offset-1.col-md-8.col-md-offset-2.col-lg-4.col-lg-offset-4.form-box
+      - var m = message
+      if m != ""
+        .alert.alert-danger #{message}
+      form.f1(role='form', action='/registrationSocial', method='post', id='reg-form')
+        h3 Create Account
+        .f1-steps
+          .f1-progress
+            .f1-progress-line(data-now-value='16.66', data-number-of-steps='3', style='width: 16.66%;')
+          .f1-step.active
+            .f1-step-icon
+              i.fa.fa-user
+            p About
+          .f1-step
+            .f1-step-icon
+              i.fa.fa-home
+            p Account
+          .f1-step
+            .f1-step-icon
+              i.fa.fa-money
+            p Payment
+        fieldset
+          - var m = message
+          if m != ""
+            .alert.alert-danger #{message}
+          .form-group
+            | Which MLS are you a member of?
+            // <input type="text" name="f1-MSL" class="f1-MLS form-control" id="f1-MLS">
+            input#f1-MLS.f1-MLS.form-control(type='text', list='mls', name='f1MSL' placeholder='Click on the dropdown')
+            datalist#mls
+              option(value='Charlotte') Charlotte
+          .form-group
+            | What is your MLSID? (so we can verify you're allowed to sign up!)
+            input.f1-NRDS.form-control(type='text', name='f1NRDS', placeholder='XXXXXXXXX', maxlength='5')
+          .form-group
+            | Got a promo code? (If not, type N/A)
+            input.f1-Promo.form-control(type='text', name='f1Promo', placeholder='SUITE-2017', maxlength='20')
+          br
+          .f1-buttons
+            button.btn.btn-next(type='button') Next
+          br
+          p.form-group
+            | By creating an account, you agree to our 
+            a(href='#') Terms of Use
+            |  and our 
+            a(href='#') Privacy Policy
+            | .
+          hr
+          p
+          | Already have a Suite account? 
+          a(href='/') Sign in
+          p
+        //-stripe token creation here
+        fieldset
+          .form-group
+              | What type of plan?
+              br
+              input(type='radio', name='planType', value='planType1')
+              |  Basic Plan, 
+              strong $33
+              br
+              br
+              label(for='card-element')
+                | Credit or debit card
+              #card-element
+                br
+                // a Stripe Element will be inserted here.
+              // Used to display Element errors
+              #card-errors(role='alert')
+                br
+          .f1-buttons
+            input(type='hidden', name="email", value='#{agent.email}')
+            input(type='hidden', name="f1firstname", value='#{agent.firstName}')
+            input(type='hidden', name="f1lastname", value='#{agent.lastName}')
+            input(type='hidden', name="password", value='#{agent.fbToken}')  
+            button.btn.btn-previous.pull-left(type='button') Previous
+            button.btn.btn-submit.pull-right(onclick='createToken()') Submit
+          br
+          br
+
+          p.form-group
+            | By creating an account, you agree to our 
+            a(href='#') Terms of Use
+            |  and our 
+            a(href='#') Privacy Policy
+            | .
+          hr
+          p
+          | Already have a Suite account? 
+          a(href='/') Sign in
+          p
+            //-button.btn.btn-submit(type='submit') Submit
+    // Javascript
+    script(src='../static/js/jquery-1.11.1.min.js')
+    script(src='../static/js/bootstrap.min.js')
+    //- // <script src="assets/js/jquery.backstretch.min.js"></script>
+    script(src='../static/js/registrationSocial.js')
+    //- //if lt IE 10
+    //-   script(src='assets/js/placeholder.js')

@@ -1,0 +1,17 @@
+{ 
+  "AWS_REGION": "us-east-1",
+  "STARTUP_SIGNUP_TABLE": "gsg-signup-app",
+  "AGENTS_TABLE": "Agents",
+  "ACTIVE_AGENTS": "Active_Agents",
+  "STARTUP_LISTINGS_TABLE": "resi_table_zip",
+  "CLIENT_LISTINGS": "inactive_resi_table",
+  "CLIENT_LISTINGS2": "inactive_resi_table2",
+  "CLIENTS_TABLE": "Clients",
+  "MAPPING": "NeighborhoodMapping",
+  "CONDOMPV": "CondoMedianPropertyVal",
+  "SINGLEFAMMPV": "SingleFamilyMedianPropertyVal",
+  "CONDOMPV_ZIP": "CondoMedianPropertyVal_zip",
+  "SINGLEFAMMPV_ZIP": "SingleFamilyMedianPropertyVal_zip",
+  "LANDINGPAGEUSERS": "LandingPageUsers",
+  "NEW_SIGNUP_TOPIC": "arn:aws:sns:us-east-1:495598137134:signup-notifications"
+}

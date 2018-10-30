@@ -1,0 +1,418 @@
+doctype html
+
+html(lang='en' ng-app='SuiteStartup')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Listings
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500')
+    link(href='../static/css/bootstrap.min.css', rel='stylesheet')
+    link(href='../static/font-awesome-4.7.0/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.5/awesome-bootstrap-checkbox.min.css')
+
+    link(href='../static/css/gallery.css', rel='stylesheet')
+    link(href='../static/css/responsive.css', rel='stylesheet')
+
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css')
+
+    // Core JavaScript Files
+    script(src="../static/js/jquery.min.js")
+    script(src="../static/js/bootstrap.min.js")
+
+    // Angular lib
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/ngInfiniteScroll/1.3.0/ng-infinite-scroll.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/c3-angular/1.3.1/c3-angular.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-cookies.min.js')
+    script(src='../static/js/main.js')
+    script(src='./js/app.js')
+    script(src='../static/Chart.min.js')
+    script(src='../static/angular-chart.min.js')
+    script(src="../static/js/accounting.min.js")
+
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-98894350-1', 'auto');
+      ga('send', 'pageview');
+
+    style.
+      .chart-title {
+        position: absolute;
+        left: 5;
+        right: 0;
+        margin: 0 auto;
+        top: 13%;
+        transform: translateY(-50%);
+        width: 100%;
+        padding-left: .5em;
+        text-align: center;
+        font-size: 2.6em;
+        color: #333333;
+      }
+      .fa.fa-times-circle {
+          color:lightgrey;
+          font-size: 150%;
+          cursor: pointer;
+          user-select: none;
+          top:8%;
+          position:absolute;
+          right:7%;
+      }
+
+      .fa.fa-times-circle:hover {
+        color: #FF0000;
+      }
+  body
+    div(ng-controller="SavedController", ng-cloak)
+      nav.navbar.navbar-custom.navbar-fixed-top
+        .container
+          .navbar-header
+            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href='/listings')
+              img#suiteLogo(src='../static/img/suite3transparent.png', alt='')
+          #navbar.navbar-collapse.collapse
+            ul.nav.navbar-nav
+              li
+                a(href='/listings') Listings
+              li.active
+                a(href='/savedListings') Saved Searches
+              li
+                a(href='/comingSoon') Advertise
+              li
+                a(href='/referral') Refer an Agent
+              //- li
+              //-   a(href='/clients') Clients
+            ul.nav.navbar-nav.navbar-right
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                  | My Suite 
+                  span.caret
+                ul.dropdown-menu
+                  li
+                    a(href='/resetOldPassword')
+                      i.fa.fa-user-circle-o(aria-hidden='true')
+                      |    Change Password
+                  li.divider(role='separator')
+                  //- li
+                  //-   a(href='/comingSoon')
+                  //-     i.fa.fa-arrow-circle-o-up(aria-hidden='true')
+                  //-     |    Upgrade
+                  //- li.divider(role='separator')
+                  li
+                    a(href='/logout')
+                      i.fa.fa-power-off(aria-hidden='true')
+                      |    Logout
+          // /.nav-collapse
+      br
+      br
+      div
+        .row(style='padding-left:5%; padding-right:5%')
+          // Single Product Item Starts Here
+          .col-sm-4(ng-repeat='listing in listings' id="item-{{listing.MLSNumber.N}}")
+            .product-item(style='border-radius: 6px')
+              h3.text-center(display="inline" style="font-size:1.5vw;") {{listing.StreetNumberNumeric.N}} {{listing.StreetName.S}} {{listing.StreetSuffix.S}}
+                i.fa.fa-times-circle(ng-click='deleteListing(listing)' id='circle-{{listing.MLSNumber.N}}')
+              .row(ng-click="listingData(listing)" data-target='#modal-fullscreen' data-toggle='modal')
+                .col-xs-6
+                  img(ng-src='https://s3.amazonaws.com/listing-images1/img/'+'{{listing.Matrix_Unique_ID.N}}' + '.jpeg', alt='')
+                .col-xs-6
+                  table.table-full-width.text-bold
+                    tr
+                      td Price:
+                      td {{listing.ListPrice.N | currency : "$" : 0}}
+                    tr
+                      td Sq. Ft.:
+                      td {{listing.SqFtTotal.N}}
+                    tr
+                      td Beds:
+                      td {{listing.BedsTotal.N}}
+                    tr
+                      td Bath:
+                      td {{listing.BathsTotal.S.split('.')[0]}}
+                    tr
+                      td Yr. Built:
+                      td {{listing.YearBuilt.N}}
+                    tr(ng-show='showROI(listing.Rent.S)')
+                      td(style='color:#0091FF;')
+                        strong Est. ROI:
+                      td(style='color:#0091FF;')
+                        strong {{listing.ROI.S}}%
+                    tr(ng-hide='showROI(listing.Rent.S)')
+                      td(style='color:#0091FF;')
+                        strong Insufficient
+                      td(style='color:#0091FF;')
+                        strong Data
+              br
+              div(style='text-align: center;')
+                i *ROI based on 1 year estimates
+
+
+      .modal.modal-fullscreen.fade(id="modal-fullscreen", tabindex="-1",role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+              .modal-header
+                button.close(type='button', ng-click='close()', data-dismiss='modal', style='border-left: 1px solid #ccc; border-right: 1px solid #ccc;')
+                  span(aria-hidden='true') ×
+                  |  CLOSE
+                ul.list-inline.modal-header-nav
+                  li(style='border-left: 1px solid #ccc;')
+                    a(href='#' ng-click='deleteListing(selectedListing)') Remove
+                  li
+                  //-   a(href='#') Share
+                  //- li
+                  //-   a(href='#') Print
+              .modal-body
+                .container
+                  .wrapper-details
+                    .row
+                      // Left of Details Starts here
+                      .details-left
+                        .col-sm-7.no-pad-right
+                          .details-left-top
+                            .col-sm-7
+                              #myCarousel.carousel.slide(data-ride='carousel')
+                                ol.carousel-indicators
+                                  li(data-target='#myCarousel', data-slide-to='0')
+                                  li(data-target='#myCarousel', data-slide-to='1')
+                                  li(data-target='#myCarousel', data-slide-to='2')
+                                  li(data-target='#myCarousel', data-slide-to='3')
+                                .carousel-inner(role='listbox')
+                                  .item.active
+                                    img(ng-src='{{slides[1].image}}', alt='Chania')
+                                  //- .item(ng-repeat='slide in slides')
+                                  //-   img(ng-src='{{slide.image}}', alt='Chania')
+                                  //- .item
+                                  //-   img(src='../static/img/background/NewYorkPenthouse.jpg', alt='Flower', width='50', height='50')
+                                  //- .item
+                                  //-   img(src='../static/img/background/NewYorkPenthouse2.jpg', alt='Flower', width='50', height='50')
+                                a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
+                                  span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+                                  span.sr-only Previous
+                                a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
+                                  span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+                                  span.sr-only Next
+                            .col-sm-5
+                              .details-middle-top
+                                h3.text-center Cap Rate
+                                h3.text-center(ng-bind="CapRate")
+                          .details-left-bottom
+                            h2.text-center {{selectedListing.PropertyType.S}} in {{selectedListing.City.S}}
+                            h3.text-center.font-weight-normal {{selectedListing.StreetNumberNumeric.N}} {{selectedListing.StreetName.S}} {{selectedListing.StreetSuffix.S}}
+                            h3.text-center.font-weight-normal Postal Code: {{selectedListing.PostalCode.N}}
+                            h3.text-center.font-weight-normal MLS Number: {{selectedListing.MLSNumber.N}}
+                            h3.text-center.font-weight-normal Days on the Market: {{selectedListing.DOM.N}}
+                            ul.list-unstyled.house-items
+                              li
+                                i.fa.fa-bed(aria-hidden='true')
+                                |  {{selectedListing.BedsTotal.N}} bed
+                              li
+                                i.fa.fa-bath(aria-hidden='true')
+                                |  {{selectedListing.BathsTotal.S.split('.')[0]}} bath
+                              li
+                                i.fa.fa-square-o(aria-hidden='true')
+                                |  {{selectedListing.SqFtTotal.N}} sq. ft.
+                              li
+                                i.fa.fa-building-o(aria-hidden='true')
+                                |  {{selectedListing.YearBuilt.N}} built
+                        
+                      // Left of Details Ends here
+                      // Right of Details Starts here
+                      .details-right
+                        .col-sm-5.no-pad-left
+                          .details-right-top(style="padding-left:7em; padding-top:.56em")
+                            label.chart-title(ng-bind='ROI')
+                            canvas#doughnut.chart.chart-doughnut(width="260", height="260", chart-data='data', chart-labels='labels', chart-colors='colours', chart-options="options")
+                            // End Chart
+
+                          .details-right-bottom
+                            h4.text-center 1-year estimated ROI
+                            form(action='')
+                              h3.text-center Breakdown
+                              button.btn.btn-default(type='button' ng-click='reset(selectedListing)') Restore
+                              h3.text-center.custom-heading Purchase
+                              .table-div
+                                table
+                                  tr
+                                    td Price:
+                                    td
+                                      input(
+                                      name="dollarsign1"
+                                      class="form-control text-right" 
+                                      ng-model='moneyModels.priceROICalc' 
+                                      ng-change='ROICalc("money", moneyModels, "priceROICalc")'
+                                      ng-model-options="{debounce: 1000}")
+                                      
+                                      
+                                  tr
+                                    td Down Payment:
+                                    td
+                                      input(
+                                      name="dollarsign1"
+                                      class="form-control text-right" 
+                                      ng-model='moneyModels.downPayROICalc'
+                                      ng-change='ROICalc("money", moneyModels, "downPayROICalc")'
+                                      ng-model-options="{debounce: 1000}")
+                                      
+                                    td
+                                      input(
+                                      name="percentsign"
+                                      class="form-control text-right" 
+                                      ng-model='rates.downPPROICalc' 
+                                      ng-change='ROICalc("percent", rates, "downPPROICalc")' 
+                                      ng-model-options="{debounce: 1000}")
+                                      
+                                  tr
+                                    td Closing Costs:
+                                    td
+                                      input(
+                                      name="dollarsign1"
+                                      class="form-control text-right" 
+                                      ng-model='moneyModels.closingCostROICalc' 
+                                      ng-change='ROICalc("money", moneyModels, "closingCostROICalc")' 
+                                      ng-model-options="{debounce: 1000}")
+                                      
+                                    td
+                                      input(
+                                      name="percentsign"
+                                      class="form-control text-right" 
+                                      ng-model='rates.closingCPROICalc' 
+                                      ng-change='ROICalc("percent", rates, "closingCPROICalc")' 
+                                      ng-model-options="{debounce: 1000}")
+                                      
+                                  tr
+                                    td Interest Rate:
+                                    td
+                                      input(
+                                      name="percentsign"
+                                      class="form-control text-right" 
+                                      ng-model='rates.interestRateROICalc' 
+                                      ng-change='ROICalc("percent", rates, "interestRateROICalc")' 
+                                      ng-model-options="{debounce: 1000}")
+                                      
+                                  tr
+                                    td Loan Term:
+                                    td
+                                      input(
+                                      name="year"
+                                      class="form-control text-right" 
+                                      ng-model='wordy.loanTermROICalc' 
+                                      ng-change='ROICalc("timeText", wordy, "loanTermROICalc")'
+                                      ng-model-options="{debounce: 1000}")
+                                      
+                              h3.text-center.custom-heading Recurring Monthly
+                              //- h5.alignright Annual Increase
+                              table
+                                tr
+                                  td Cash Flow:
+                                  td 
+                                    input(
+                                    name="dollarsign1"
+                                    class="form-control text-right" 
+                                    ng-model='moneyModels.cashFlowROICalc', 
+                                    ng-change='ROICalc("money", moneyModels, "cashFlowROICalc")' 
+                                    ng-model-options="{debounce: 1000}" readonly)
+                                  
+                                tr
+                                  td Rent:
+                                  td 
+                                    input(
+                                    name="dollarsign1"
+                                    class="form-control text-right" 
+                                    ng-model='moneyModels.rentROICalc', 
+                                    ng-change='ROICalc("money", moneyModels, "rentROICalc")' 
+                                    ng-model-options="{debounce: 1000}")
+                                  
+                                tr
+                                  td Mortgage Payment:
+                                  td 
+                                    input(
+                                    name="dollarsign1"
+                                    class="form-control text-right" 
+                                    ng-model='moneyModels.mortgageROICalc', 
+                                    ng-change='ROICalc("money", moneyModels, "mortgageROICalc")' 
+                                    ng-model-options="{debounce: 1000}")
+                                  
+                                tr
+                                  td Vacancy Rate:
+                                  td 
+                                    input(
+                                    name="percentsign"
+                                    class="form-control text-right" 
+                                    ng-model='rates.vacancyROICalc', 
+                                    ng-change='ROICalc("percent", rates, "vacancyROICalc")' 
+                                    ng-model-options="{debounce: 1000}")
+                                  
+                                tr
+                                  td Management Fee:
+                                  td 
+                                    input(
+                                    name="dollarsign1"
+                                    class="form-control text-right" 
+                                    ng-model='moneyModels.manageFeeROICalc', 
+                                    ng-change='ROICalc("money", moneyModels, "manageFeeROICalc")' 
+                                    ng-model-options="{debounce: 1000}")
+                                  td 
+                                    input(
+                                    name="percentsign"
+                                    class="form-control text-right" 
+                                    ng-model='rates.manageFPROICalc', 
+                                    ng-change='ROICalc("percent", rates, "manageFPROICalc")' 
+                                    ng-model-options="{debounce: 1000}")
+                                  
+                                tr
+                                  td HOA Fee:
+                                  td 
+                                    input(
+                                    name="dollarsign1"
+                                    class="form-control text-right" 
+                                    ng-model='wordy.hoaROICalc', 
+                                    ng-change='ROICalc("timeText", wordy, "hoaROICalc")', 
+                                    ng-model-options="{debounce: 1000}")
+                                  td 
+                                  
+                                tr
+                                  td Maintenance Cost:
+                                  td 
+                                    input(
+                                    name="dollarsign1"
+                                    class="form-control text-right" 
+                                    ng-model='moneyModels.maintenanceROICalc', 
+                                    ng-change='ROICalc("money", moneyModels, "maintenanceROICalc")' 
+                                    ng-model-options="{debounce: 1000}")
+                                  td 
+                                    input(
+                                    name="percentsign"
+                                    class="form-control text-right" 
+                                    ng-model='rates.maintenancePROICalc', 
+                                    ng-change='ROICalc("percent", rates, "maintenancePROICalc")' 
+                                    ng-model-options="{debounce: 1000}")
+                                  
+                                tr
+                                  td Property Taxes:
+                                  td 
+                                    input(
+                                    name="dollarsign1"
+                                    class="form-control text-right" 
+                                    ng-model='moneyModels.propTaxPROICalc', 
+                                    ng-change='ROICalc("money", moneyModels, "propTaxPROICalc")' 
+                                    ng-model-options="{debounce: 1000}")
+                                  
+                                tr
+                                  td Property Insurance:
+                                  td 
+                                    input(
+                                    name="dollarsign1"
+                                    class="form-control text-right" 
+                                    ng-model='moneyModels.propInsPROICalc', 
+                                    ng-change='ROICalc("money", moneyModels, "propInsPROICalc")' 
+                                    ng-model-options="{debounce: 1000}")
+                      // Right of Details Ends here

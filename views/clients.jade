@@ -1,0 +1,218 @@
+doctype html
+html(lang='en' ng-app='SuiteStartup')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Clients
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500')
+    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', rel='stylesheet')
+    link(href='../static/font-awesome-4.7.0/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.5/awesome-bootstrap-checkbox.min.css')
+    link(href='../static/css/clients.css', rel='stylesheet')
+    link(href='../static/css/responsive.css', rel='stylesheet')
+
+    // Core JavaScript Files
+    script(src='../static/js/jquery.min.js')
+    //- script(src='../static/js/bootstrap.min.js')
+
+    // Angular lib
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/ngInfiniteScroll/1.3.0/ng-infinite-scroll.min.js')
+    script(src='../static/Chart.min.js')
+    script(src='../static/angular-chart.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/c3-angular/1.3.1/c3-angular.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-cookies.min.js')
+
+    // Angular app module
+    script(src='./js/app.js')
+    script(src='../static/js/main.js')
+
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-98894350-1', 'auto');
+      ga('send', 'pageview');
+
+    style.
+      .fa.fa-times-circle {
+        color:lightgrey;
+      }
+
+      .fa.fa-times-circle:hover {
+        color: #FF0000;
+      }
+
+    //if lt IE 9
+      script(src='//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
+      script(src='//oss.maxcdn.com/respond/1.4.2/respond.min.js')
+  body
+    nav.navbar.navbar-custom.navbar-fixed-top
+      .container
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/listings')
+            img#suiteLogo(src='../static/img/suite3transparent.png', alt='')
+        #navbar.navbar-collapse.collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/listings') Listings
+            li
+              a(href='/savedListings') Saved Searches
+            li
+              a(href='/comingSoon') Advertise
+            li
+              a(href='/referral') Refer an Agent
+            li.active
+              a(href='/clients') Clients
+          ul.nav.navbar-nav.navbar-right
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                | My Suite 
+                span.caret
+              ul.dropdown-menu
+                li
+                  a(href='/resetOldPassword')
+                    i.fa.fa-user-circle-o(aria-hidden='true')
+                    |    Change Password
+                li.divider(role='separator')
+                //- li
+                //-   a(href='/comingSoon')
+                //-     i.fa.fa-arrow-circle-o-up(aria-hidden='true')
+                //-     |    Upgrade
+                //- li.divider(role='separator')
+                li
+                  a(href='/logout')
+                    i.fa.fa-power-off(aria-hidden='true')
+                    |    Logout
+        // /.nav-collapse
+    //
+      <div class="heading-about">
+      <div class="container">
+      <div class="row">
+      <div class="col-lg-8 col-lg-offset-2">
+      <div class="wow fadeInDown" data-wow-delay="0.2s">
+      <div class="section-heading">
+      <h1>New Tool</h1>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+    br
+    .row
+      .col-xs-3
+        form(role='form', action='', method='post')
+          .col-md-12
+            h4 Client Property Information
+            br
+            .form-group
+              label.control-label MLS Number
+              input.form-control(maxlength='100', name='mls', type='text', required='required', placeholder='')
+            .form-group
+              label.control-label Property Type
+              select.form-control(name='proptype', type='text', required='required')
+                option(value='SingleFamily') Single Family
+                option(value='Condo') Condo
+            .form-group
+              label.control-label Client Name
+              input.form-control(maxlength='100', name='name', type='text', required='required', placeholder='John Smith')
+            .form-group
+              label.control-label Client Email
+              input.form-control(required='required', name='email', type='text', placeholder='example@email.com')
+            .form-group
+              label.control-label Purchase Date
+              br
+              select#buymonth(name='buymonth')
+                option(value='', selected='1') Month
+                option(value='January') Jan
+                option(value='February') Feb
+                option(value='March') Mar
+                option(value='April') Apr
+                option(value='May') May
+                option(value='June') Jun
+                option(value='July') Jul
+                option(value='August') Aug
+                option(value='September') Sep
+                option(value='October') Oct
+                option(value='November') Nov
+                option(value='December') Dec
+              select#birthyear(name='buyyear')
+                option(value='', selected='1') Year
+                option(value='2017') 2017
+                option(value='2016') 2016
+                option(value='2015') 2015
+                option(value='2014') 2014
+                option(value='2013') 2013
+                option(value='2012') 2012
+                option(value='2011') 2011
+                option(value='2010') 2010
+                option(value='2009') 2009
+                option(value='2008') 2008
+                option(value='2007') 2007
+                option(value='2006') 2006
+                option(value='2005') 2005
+                option(value='2004') 2004
+                option(value='2003') 2003
+                option(value='2002') 2002
+                option(value='2001') 2001
+                option(value='2000') 2000
+                option(value='1999') 1999
+                option(value='1998') 1998
+                option(value='1997') 1997
+            button#addButton.btn.btn-primary.nextBtn.btn-md.col-md-12(type='submit', style='text-align: center;') Add
+            //- br
+            //- br
+            //- br
+            //- button#deleteButton.btn.btn-primary.nextBtn.btn-md.col-md-12(type='submit', style='text-align: center;') Delete
+      .container.col-xs-9(ng-controller='ClientController', ng-cloak)
+        .panel.panel-default
+          .panel-heading
+            h4
+              | Your Clients
+          table.table(style='table-layout: fixed')
+            thead
+              tr
+                th.col-xs-1
+                th.col-xs-3 Address
+                th.col-xs-2 Client
+                th.col-xs-3 Client Email
+                th.col-xs-2 Date Sold
+                th.col-xs-2 Est. Appreciation
+            tbody
+              tr(ng-repeat='client in clients' id='row-{{client.MLSNumber.S}}' style='word-wrap: break-all')
+                td.col-xs-1.fa.fa-times-circle(ng-click='deleteClient(client)')
+                td.col-xs-3 {{client.Address.S}}
+                td.col-xs-2(style='word-wrap: break-all') {{client.Name.S}}
+                td.col-xs-3 {{client.Email.S}}
+                td.col-xs-2 {{client.Date.S}}
+                td.col-xs-2 {{client.clientAppreciation}}
+              //- tr(style='word-wrap: break-all')
+              //-   td.col-xs-3 1
+              //-   td.col-xs-2(style='word-wrap: break-all') JWall
+              //-   td.col-xs-3 johnwall@gmail.com
+              //-   td.col-xs-2 23
+              //-   td.col-xs-2 23
+              //- tr
+              //-   td.col-xs-3 1
+              //-   td.col-xs-2 John Wall
+              //-   td.col-xs-3 johnwall@gmail.com
+              //-   td.col-xs-2 23
+              //-   td.col-xs-2 23
+              //- tr
+              //-   td.col-xs-3 1
+              //-   td.col-xs-2 John Wall
+              //-   td.col-xs-3 johnwall@gmail.com
+              //-   td.col-xs-2 23
+              //-   td.col-xs-2 23
+    //- script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')

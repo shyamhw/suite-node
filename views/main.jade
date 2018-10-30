@@ -1,0 +1,667 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='google-site-verification', content='uIpfiNw7K8GcssY9B-7e17VlXTgpkti0S0dCXPEBO8s')  
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Suite
+    // Bootstrap Core CSS
+    link(href='../static/css/bootstrap.min.css', rel='stylesheet', type='text/css')
+    // Fonts
+    link(href='../static/font-awesome-4.7.0/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    link(href='../static/css/animate.css', rel='stylesheet')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500')
+    // CSS
+    link(href='../static/css/responsive.css', rel='stylesheet')
+    link(href='../static/css/style.css', rel='stylesheet')
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-98894350-1', 'auto');
+      ga('send', 'pageview');
+
+  body#page-top(data-spy='scroll', data-target='.navbar-custom')
+    nav.navbar.navbar-custom.navbar-fixed-top(role='navigation')
+      .container
+        .navbar-header.page-scroll
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-main-collapse')
+            i.fa.fa-bars
+          a.navbar-brand(href='/')
+            img#suiteLogo(src='../static/img/suite-2.png', alt='')
+        // Collect the nav links, forms, and other content for toggling
+        .wow.fadeInDown(data-wow-delay='0.5s')
+          .collapse.navbar-collapse.navbar-right.navbar-main-collapse
+            ul.nav.navbar-nav
+              li.active
+                a(href='#intro') Home
+              li
+                a(href='#about') About
+              li
+                a(href='#features') Product
+              li
+                a(href='#pricing') Pricing
+              li
+                a(href='#contact') Contact
+            input.loginButton(type='button', data-toggle='modal', data-target='#loginModal', value='LOGIN / REGISTER') 
+            //-input.registerButton(type='button', value='REGISTER', href='/register1')
+        // /.navbar-collapse
+      // /.container
+    // Section: intro
+    section#intro.intro
+      .slogan
+        .wow.fadeInUp(data-wow-delay='1.0s')
+          h2 WELCOME TO SUITE
+          h3 BRINGING FINANCIAL TRANSPARENCY TO REAL ESTATE INVESTING
+        .wow.fadeInUp(data-wow-delay='1.5s')
+          h4 LETS GET STARTED!
+      .wow.fadeInUp(data-wow-delay='1.5s')
+        .idButtons
+          //- input#launch_modal_button.investorButton(type='button', data-toggle='modal', data-target='#myModal', value='I Want to Invest')
+          a(href='#features')
+            input.agentButton(type='button', value="I'm an Agent")
+    // /Section: intro
+    #loginModal.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-body
+            h1.text-center Login
+            - var m = message
+            if m != ""
+              .alert.alert-danger #{message}
+            br
+            form.form.col-md-12.center-block(method='post', role='form', id="login", action='/login')
+              .form-group(style='text-align: center;')
+                a.button.linkedin(href='/auth/linkedin-login')
+                  span
+                    i.fa.fa-linkedin
+                  p Log in with LinkedIn
+              .form-group(style='text-align: center;')
+                a.button.facebook(href='/auth/facebook-login')
+                  span
+                    i.fa.fa-facebook
+                  p Log in with Facebook
+              .strike
+                span or
+              br
+              .form-group
+                input.form-control.input-lg(type='text', placeholder='Email', name='email')
+              .form-group
+                input.form-control.input-lg(type='password', placeholder='Password', name='password')
+              .form-group
+                a(href='/tempPasswordEmail') Forgot Password
+                br
+                br
+                button.btn.btn-primary.btn-lg.btn-block() Sign In
+              |           Don't have an account? 
+              a(href='/register1') Register
+              //- br
+              //- a(href='/tempPasswordEmail') Forgot Password
+          .modal-footer
+            .col-md-12
+              button.btn(data-dismiss='modal', aria-hidden='true') Cancel
+    .container
+      .row
+        .col-sm-12
+          // Modal
+          #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+            .modal-dialog(role='document')
+              .modal-content
+                .modal-header
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') ×
+                  .row
+                    .col-xs-3
+                      img.img-responsive(src='../static/img/suite.png', alt='Suite Logo')
+                .modal-body
+                  .row
+                    .col-xs-12
+                      h4#gridSystemModalLabel.modal-title.text-center What kind of investment property are you interested in?
+                    .col-xs-12.button-rows
+                      .row
+                        .col-xs-2.row-lable
+                          p City:
+                        .col-xs-10
+                          .btn-group
+                            a#citydropdown.btn.dropdown-toggle.btn-select2(data-toggle='dropdown', href='#')
+                              | Select a City 
+                              span.caret
+                            ul.dropdown-menu(required='')
+                              li
+                                a(href='#') Charlotte, NC
+                            br
+                            span#city_message.required_messages(style='color: red;display: none;') *This is required
+                    .col-xs-12.button-rows
+                      .row
+                        .col-xs-2.row-label
+                          p Type:
+                        .col-xs-10
+                          .row
+                            .col-xs-4
+                              button.btn.btn-default.type-button Apartment
+                            .col-xs-4
+                              button.btn.btn-default.type-button Condo
+                            .col-xs-4
+                              button.btn.btn-default.type-button House
+                          span#type_message.required_messages(style='color: red;display: none;') *This is required
+                    .col-xs-12.button-rows
+                      .row
+                        .col-xs-2.row-lable
+                          p Bedrooms:
+                        .col-xs-10
+                          // data-toggle="buttons"
+                          button#any.btn.btn-default.bedroom-button Any
+                          button#studio.btn.btn-default.bedroom-button Studio
+                          button#onebr.btn.btn-default.bedroom-button 1
+                          button#twobr.btn.btn-default.bedroom-button 2
+                          button#threebr.btn.btn-default.bedroom-button 3
+                          button#fourbr.btn.btn-default.bedroom-button 4+
+                          span#bedroom_message.required_messages(style='color: red;display: none;') *This is required
+                    .col-xs-12.button-rows
+                      .row
+                        .col-xs-2.row-label
+                          p Price:
+                        .col-xs-10
+                          .row
+                            .col-xs-5
+                              input.form-control.min-value(type='text', name='min-value', value='$0')
+                              .prices-min
+                                ul.price-list
+                                  li $0
+                                  li $10,000
+                                  li $20,000
+                                  li $30,000
+                                  li $50,000
+                                  li $100,000
+                                  li $200,000
+                                  li $300,000
+                            .col-xs-2
+                              p.text-center.dash –
+                            .col-xs-5
+                              input.form-control.max-value(type='text', name='max-value', value='Any Max')
+                              .prices-max
+                                ul.price-list
+                                  li $20,000
+                                  li $30,000
+                                  li $50,000
+                                  li $100,000
+                                  li $200,000
+                                  li $300,000
+                                  li Any Max
+                .modal-footer
+                  .row
+                    .col-xs-offset-4.col-xs-4
+                      button#find_a_suite_button.btn.btn-primary.find-btn(type='submit', data-dismiss='modal', data-toggle='modal', data-target='#optionsModal') Find a Suite!
+    //
+      <div class="container">
+      <div class="row">
+      <div class="col-sm-12">
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="row">
+      <div class="col-xs-3">
+      <img src="img/suite.png" alt="Suite Logo" class="img-responsive">
+      </div>
+      </div>
+      </div>
+      <div class="modal-body">
+      <div class="row">
+      <div class="col-xs-12">
+      <h4 class="modal-title text-center" id="gridSystemModalLabel">What kind of investment property are you interested in?</h4>
+      </div>
+      <div class="col-xs-12 button-rows">
+      <div class="row">
+      <div class="col-xs-2 row-lable">
+      <p>City:</p>
+      </div>
+      <div class="col-xs-10">
+      <div class="btn-group">
+      <a class="btn dropdown-toggle btn-select2" data-toggle="dropdown"  id="citydropdown" href="#">Select a City <span class="caret"></span></a>
+      <ul class="dropdown-menu" required>
+      <li><a href="#">Charlotte, NC</a></li>
+      </ul><br />
+      <span style="color: red;display: none;" id="city_message" class="required_messages">*This is required</span>
+      </div>
+      </div>
+      </div>
+      </div>
+      <div class="col-xs-12 button-rows">
+      <div class="row">
+      <div class="col-xs-2 row-label">
+      <p>Type:</p>
+      </div>
+      <div class="col-xs-10">
+      <div class="row">
+      <div class="col-xs-4">
+      <button class="btn btn-default type-button">Apartment</button>
+      </div>
+      <div class="col-xs-4">
+      <button class="btn btn-default type-button">Condo</button>
+      </div>
+      <div class="col-xs-4">
+      <button class="btn btn-default type-button">House</button>
+      </div>
+      </div>
+      <span style="color: red;display: none;" id="type_message" class="required_messages">*This is required</span>
+      </div>
+      </div>
+      </div>
+      <div class="col-xs-12 button-rows">
+      <div class="row">
+      <div class="col-xs-2 row-lable">
+      <p>Bedrooms:</p>
+      </div>
+      <div class="col-xs-10">
+      <button id="any" class="btn btn-default bedroom-button">Any</button>
+      <button id="studio" class="btn btn-default bedroom-button">Studio</button>
+      <button id="onebr" class="btn btn-default bedroom-button">1</button>
+      <button id="twobr" class="btn btn-default bedroom-button">2</button>
+      <button id="threebr" class="btn btn-default bedroom-button">3</button>
+      <button id="fourbr" class="btn btn-default bedroom-button">4+</button>
+      <span style="color: red;display: none;" id="type_message" class="required_messages">*This is required</span>
+      </div>
+      </div>
+      </div>
+      <div class="col-xs-12 button-rows">
+      <div class="row">
+      <div class="col-xs-2 row-label">
+      <p>Price:</p>
+      </div>
+      <div class="col-xs-10">
+      <div class="row">
+      <div class="col-xs-5">
+      <input type="text" class="form-control min-value" name="min-value" value="$0">
+      <div class="prices-min">
+      <ul class="price-list">
+      <li>$0</li>
+      <li>$10,000</li>
+      <li>$20,000</li>
+      <li>$30,000</li>
+      <li>$50,000</li>
+      <li>$100,000</li>
+      <li>$200,000</li>
+      <li>$300,000</li>
+      </ul>
+      </div>
+      </div>
+      <div class="col-xs-2">
+      <p class="text-center dash">–</p>
+      </div>
+      <div class="col-xs-5">
+      <input type="text" class="form-control max-value" name="max-value" value="Any Max">
+      <div class="prices-max">
+      <ul class="price-list">
+      <li>$20,000</li>
+      <li>$30,000</li>
+      <li>$50,000</li>
+      <li>$100,000</li>
+      <li>$200,000</li>
+      <li>$300,000</li>
+      <li>Any Max</li>
+      </ul>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      <div class="modal-footer">
+      <div class="row">
+      <div class="col-xs-offset-4 col-xs-4">
+      <button type="submit" class="btn btn-primary find-btn" data-dismiss="modal" data-toggle="modal" data-target="#optionsModal">Find a Suite!</button>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+    // /Investor Modal
+    // Section:Options Modal
+    #optionsModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='optionsModal')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            .row
+              .col-xs-3
+                img.img-responsive(src='../static/img/suite.png', alt='Suite Logo')
+          .modal-body
+            .row
+              .col-xs-12.resultheader(style='text-align: center;')
+                h1#gridSystemModalLabel How can we help you?
+                h5 Choose the option that is most convenient for you.
+            .row
+              .col-sm-12
+                .col-sm-6.contact
+                  .panel.panel-warning.panel-contact1(data-dismiss='modal', data-toggle='modal', data-target='#getContactedModal')
+                    .panel-heading-pro
+                      i.fa.fa-envelope(aria-hidden='true', style='text-align: center;')
+                      br
+                      h4(style='text-align: center;') Get Contacted
+                      p
+                        | Provide your email address and a Suite certified Agent will reach out to you soon.
+                .col-sm-6.contact
+                  .panel.panel-warning.panel-contact(data-dismiss='modal', data-toggle='modal', data-target='#contactAgentModal')
+                    .panel-heading-pro
+                      i.fa.fa-phone(aria-hidden='true', style='text-align: center;')
+                      br
+                      h4(style='text-align: center;') Contact an agent
+                      p
+                        | We will provide you with the contact info of a Suite certified Agent. Reach out at your convenience.
+            .modal-footer
+              .row
+                .col-xs-offset-4.col-xs-4
+                  button.btn.btn-primary.back-btn(type='button', data-dismiss='modal', data-toggle='modal', data-target='#myModal') Back
+    // /Contact Modal
+    // Section: GetContacted Modal
+    #getContactedModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='getContactedModal')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            .row
+              .col-xs-3
+                img.img-responsive(src='../static/img/suite.png', alt='Suite Logo')
+          .modal-body
+            .row
+              .col-xs-12.resultheader(style='text-align: center;')
+                h1#gridSystemModalLabel Get Contacted
+                h5 Type in your contact information and an agent will contact you.
+            .row
+              .col-xs-6.col-xs-offset-3
+                form#referral-form.referralForm(action='', method='post', role='form')
+                  .row
+                    .col-xs-6
+                      input#firstName.form-control(type='text', name='name', placeholder='First Name')
+                    .col-xs-6
+                      input#lastName.form-control(type='text', name='name', placeholder='Last Name')
+                  br
+                  .row
+                    .col-xs-12
+                      input#email.form-control(type='text', name='email', placeholder='Email Address')
+                  br
+                  .row(style='text-align: center;')
+                    .col-md-12
+                      a(href='/')
+                        button#referralSubmit.btn.btn-skin(type='submit')  Submit
+    // /GetContacted Modal
+    // Section: contactAgent Modal
+    #contactAgentModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='contactAgentModal')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            .row
+              .col-xs-3
+                img.img-responsive(src='../static/img/suite.png', alt='Suite Logo')
+          .modal-body
+            .row
+              .col-xs-12.resultheader(style='text-align: center;')
+                h1#gridSystemModalLabel Contact an Agent
+                h5 Contact this agent for a Suite deal!
+            .row
+              .col-xs-4.col-xs-offset-4
+                img.img-responsive(src='../static/img/lady.jpg', style='max-width: 100%; margin-bottom: 10px;')
+            .row(style='margin-bottom: 15px;')
+              .col-xs-5.col-xs-offset-4
+                .row
+                  | Agent Name: 
+                .row
+                  | Agency: 
+                .row
+                  | Email Address: 
+                .row
+                  | Phone Number: 
+    // /contactAgent Modal
+    // Section: about
+    section#about.home-section.text-center
+      .heading-about
+        .container
+          .row
+            .col-lg-8.col-lg-offset-2
+              .section-heading
+                .wow.fadeInDown(data-wow-delay='0.2s')
+                  h2 -Our Mission-
+                .wow.fadeInUp(data-wow-delay='0.2s')
+                  p
+                    | To make complicated financial decisions a lot easier
+      .container
+        .row
+          .col-lg-2.col-lg-offset-5
+            hr.marginbot-50
+        .heading-about
+          .container
+            .row
+              .col-lg-8.col-lg-offset-2
+                .section-heading
+                  .wow.fadeInDown(data-wow-delay='0.2s')
+                    h2 About
+                  .wow.fadeInUp(data-wow-delay='0.2s')
+                    p
+                      | At Suite, we strive to create win-win situations. Our aim is to align the interests of real estate agents and their clients by collecting massive amounts of real
+                      | estate data, plugging them into our algorithms, and presenting the information in a digestible format for more informed and timely decision-making.
+                    br
+                    p
+                      | Transparency is found at the intersection of information and effective communication. We strongly believe that by giving your clients an easy and
+                      | engaging experience you will not only grow your portfolio, but you’ll have fun doing it too. Win-win!
+    // /Section: about
+    // Section: services
+    section#features.home-section.text-center.bg-gray
+      .heading-about
+        .container
+          .row
+            .col-lg-8.col-lg-offset-2
+              .wow.fadeInDown(data-wow-delay='0.2s')
+                .section-heading
+                  h2 How it works
+      .container
+        .row
+          .col-lg-2.col-lg-offset-5
+            hr.marginbot-50
+        .row
+          .col-md-3
+            .wow.fadeInLeft(data-wow-delay='0.2s')
+              .service-box
+                .service-icon
+                  i.fa.fa-keyboard-o.fa-4x(aria-hidden='true')
+                .service-desc
+                  h5 Input client’s preferences
+                  p
+                    | In less than 30 seconds, input client’s preferences for price range, property type, location, etc.
+          .col-md-3
+            .wow.fadeInUp(data-wow-delay='0.2s')
+              .service-box
+                .service-icon
+                  i.fa.fa-line-chart.fa-4x(aria-hidden='true')
+                .service-desc
+                  h5 Pull up relevant listings
+                  p
+                    | Every listing that meets your client’s criteria will be pulled up in order of highest projected ROI.
+          .col-md-3
+            .wow.fadeInUp(data-wow-delay='0.2s')
+              .service-box
+                .service-icon
+                  i.fa.fa-envelope-o.fa-4x(aria-hidden='true')
+                .service-desc
+                  h5 Send best options to client
+                  p
+                    | Email best investment opportunities to investors / clients in a user-friendly, digestible format.
+          .col-md-3
+            .wow.fadeInRight(data-wow-delay='0.2s')
+              .service-box
+                .service-icon
+                  i.fa.fa-handshake-o.fa-4x(aria-hidden='true')
+                .service-desc
+                  h5 Close the deal!
+                  p
+                    | Clients have all the information they need to make a smart investment decision and put down an offer.
+      br
+      br
+      br
+      br
+      .row
+        .col-sm-12.see-pricing
+          h3#see-pricing Buy Now!
+          a(href='#pricing')
+            i#downarrow.fa.fa-4x.fa-angle-down(data-target='#pricing')
+    // /Section: services
+    // Section: pricing
+    section#pricing.home-section.text-center
+      .container
+        .row
+          .heading-about
+            .container
+              .row
+                .col-lg-8.col-lg-offset-2
+                  .wow.fadeInDown(data-wow-delay='0.2s')
+                    .section-heading
+                      h2 Pricing
+          .row
+            .col-lg-2.col-lg-offset-5
+              hr.marginbot-50
+          // item
+          .col-md-4.col-md-offset-4.text-center
+            .wow.fadeInUp(data-wow-delay='0.2s')
+              .panel.panel-danger.panel-pricing-reg
+                .panel-heading-lite
+                  i.fa.fa-home
+                  br
+                  br
+                  h3 SUITE
+                  h1 $33/Mo.
+                  h4 per Agent
+                ul.list-group.text-center
+                  li.list-group-item
+                    i.fa.fa-check
+                    |  Investment Property Search
+                  li.list-group-item
+                    i.fa.fa-check
+                    |  Investment Property Valuations
+                  li.list-group-item
+                    i.fa.fa-check
+                    |  Filter Specific Criteria
+                  li#inv.list-group-item 
+                    i.fa.fa-check
+                    |  Integrated With Our iOS App  
+                .panel-footer
+                  a.btn.btn-lg.btn-block.btn-lite(href='/register1') BUY NOW!
+
+          //- .col-md-4.text-center
+          //-   .wow.fadeInRight(data-wow-delay='0.2s')
+          //-     .panel.panel-warning.panel-pricing-deluxe
+          //-       .panel-heading-pro
+          //-         i.fa.fa-home
+          //-         br
+          //-         br
+          //-         h3 SUITE PRO
+          //-         h1 $25/Mo.
+          //-         h4 per Agent
+          //-       ul.list-group.text-center
+          //-         li.list-group-item
+          //-           i.fa.fa-check
+          //-           |  Investment Property Search
+          //-         li.list-group-item
+          //-           i.fa.fa-check
+          //-           |  Investment Property Valuations
+          //-         li.list-group-item
+          //-           i.fa.fa-check
+          //-           |  Filter Specific Criteria
+          //-         li#inv.list-group-item .
+          //-       .panel-footer
+          //-         a.btn.btn-lg.btn-block.btn-pro(href='/register1') BUY NOW!
+
+    section#contact.home-section.text-center.bg-gray
+      .heading-contact
+        .container
+          .row
+            .col-lg-8.col-lg-offset-2
+              .wow.fadeInDown(data-wow-delay='0.4s')
+                .section-heading
+                  h2 Contact Us
+      .container
+        .row
+          .col-lg-2.col-lg-offset-5
+            hr.marginbot-50
+        .row
+          //
+            <div class="col-lg-6">
+            <div class="widget-contact">
+            <h5>Main Office</h5>
+            <address>
+            <strong>mainoffice</strong><br>
+            address<br>
+            <abbr title="Phone">P:</abbr>
+            </address>
+            <address>
+            <strong>Email</strong><br>
+            <a href="mailto:#"></a>
+            </address>
+            <address>
+            <strong>We're on social networks</strong><br>
+            <ul class="company-social">
+            <li class="social-facebook"><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+            <li class="social-twitter"><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+            <li class="social-dribble"><a href="#" target="_blank"><i class="fa fa-dribbble"></i></a></li>
+            <li class="social-google"><a href="#" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+            </ul>
+            </address>
+            </div>
+            </div>
+          .col-lg-6.col-lg-offset-3
+            h4#h4 WANT SUITE IN YOUR CITY?
+            h5#h5 GET NOTIFIED WHEN WE LAUNCH IN YOUR AREA
+            .boxed-grey
+              #sendmessage Your message has been sent. Thank you!
+              #errormessage
+              form#contact-form.contactForm(action='/contact', method='post', role='form')
+                .row
+                  .col-md-6.col-xs-offset-3
+                    .form-group
+                      label(for='name')
+                        | Name
+                      input#name.form-control(type='text', name='name', placeholder='Your Name', data-rule='minlen:4', data-msg='Please enter at least 4 chars')
+                      .validation
+                    .form-group
+                      label(for='email')
+                        | Email Address
+                      .form-group
+                        input#email.form-control(type='email', name='email', placeholder='Your Email', data-rule='email', data-msg='Please enter a valid email')
+                        .validation
+                  .col-md-12
+                    button#btnContactUs.btn.btn-skin(type='submit')
+                      | Submit
+    // /Section: contact
+    footer
+      .container
+        br
+        .row
+          .col-xs-10
+            p ©Suite Technologies. All rights reserved.
+          .col-xs-2
+            a(href='#') Terms
+            |           -&nbsp;
+            a(href='/privacy') Policy
+    // Core JavaScript Files
+    script(src='../static/js/jquery.min.js')
+    script(src='../static/js/bootstrap.min.js')
+    script(src='../static/js/jquery.easing.min.js')
+    script(src='../static/js/jquery.scrollTo.js')
+    script(src='../static/js/wow.min.js')
+    // Custom Theme JavaScript
+    script(src='../static/js/custom.js')
+    script(src='../static/js/app.js')
+    //-script(src='../static/contactform/contactform.js')
